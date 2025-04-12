@@ -163,10 +163,9 @@ Voucher codes are managed through a Redis-backed system:
 1. 10 unique `HAPPYHOURS` codes (0-9) are stored in Redis
 2. When a user enters a code, it's validated through the `/discounts/validate` endpoint
 3. Valid codes provide an 18% discount on the order total
-4. `BUYGETONE` discount removes the lowest priced item from the total
-5. Once applied, the discount is displayed with amount and percentage
-6. Used codes are locked in Redis to prevent reuse
-7. Error messages for invalid codes are displayed directly below the input field
+4. Once applied, the discount is displayed with amount and percentage
+5. Used codes are locked in Redis to prevent reuse
+6. Error messages for invalid codes are displayed directly below the input field
 
 Implementation highlights:
 - Redis TTL (Time-to-Live) set to 24 hours for used codes
