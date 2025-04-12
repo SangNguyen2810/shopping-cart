@@ -1,0 +1,9 @@
+.cartPage {
+  @apply mt-6;
+}
+
+@media (min-width: 768px) {
+  .cartPage {
+    @apply mt-[80px];
+  }
+}

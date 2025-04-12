@@ -1,0 +1,64 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.card {
+  text-align: center;
+  position: relative;
+  padding: 48px 32px 40px;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.badge {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #FF8A00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(255,138,0,0.3);
+}
+
+.title {
+  font-size: 28px;
+  margin-bottom: 12px;
+  color: #1a1b1e;
+}
+
+.illustration {
+  margin: 32px auto;
+  width: 160px;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  padding-bottom: 8px;
+}
+
+.button {
+  transition: transform 0.2s ease;
+}
+
+.buttonBack:hover {
+  transform: translateX(-3px);
+}
+
+.buttonHome:hover {
+  transform: translateY(-3px);
+} 

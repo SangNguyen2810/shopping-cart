@@ -1,0 +1,19 @@
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes pulse {
+  0% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.05); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+.floatingAnimation {
+  animation: float 3s ease-in-out infinite;
+}
+
+.pulsingAnimation {
+  animation: pulse 2s ease-in-out infinite;
+} 

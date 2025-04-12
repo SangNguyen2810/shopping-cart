@@ -1,0 +1,43 @@
+.cartScroll {
+  @apply max-h-[calc(100vh-380px)] overflow-y-auto;
+  @apply [scrollbar-width:thin] [scrollbar-color:#C63B0F_#f1f3f5];
+}
+
+.cartScroll::-webkit-scrollbar {
+  @apply w-1;
+}
+
+.cartScroll::-webkit-scrollbar-track {
+  @apply bg-[#f1f3f5] rounded-[2px];
+}
+
+.cartScroll::-webkit-scrollbar-thumb {
+  @apply bg-[#C63B0F] rounded-[2px];
+}
+
+.itemTransition {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+.itemTransition:hover {
+  @apply bg-[#f8f9fa];
+}
+
+.cartTotal {
+  @apply bg-white shadow-[0px_4px_24px_rgba(0,0,0,0.06)] sticky top-6 h-fit;
+  @apply mt-20 mb-5;
+}
+
+@media (min-width: 768px) {
+  .cartTotal {
+    @apply w-[384px] min-w-[384px];
+  }
+}
+
+@media (min-width: 1024px) {
+  .cartTotal {
+    @apply mt-0 mb-0;
+
+    @apply w-full;
+  }
+}

@@ -1,0 +1,33 @@
+/* Define CSS variables for colors */
+:root {
+  /* Primary colors */
+  --color-primary-lightest: #fff0f3;
+  --color-primary-light: #ffe0e9;
+  --color-primary-base: #ff4d6d;
+  --color-primary-medium: #ff748c;
+  --color-primary-dark: #c73b0e;
+  --color-primary-darker: #b94825;
+  --color-primary-darkest: #a61e1e;
+
+  /* Text colors */
+  --color-text-primary: #333333;
+  --color-text-secondary: #bbb2ae;
+  --color-text-muted: #999999;
+  --color-text-highlight: #c56b4f;
+  --color-text-highlight-dimmed: #bf7f6b;
+
+  /* Background colors */
+  --color-bg-light: #b4a69c;
+  --color-bg-card: #ffffff;
+  --color-bg-accent: #f8f8f8;
+  --color-bg-highlight: #fff8e7;
+
+  /* Border colors */
+  --color-border-light: #e8e8e8;
+  --color-border-medium: #d1d1d1;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+

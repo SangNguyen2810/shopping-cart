@@ -1,0 +1,191 @@
+basePath: /api
+definitions:
+  models.APIResponse:
+    properties:
+      data: {}
+      error:
+        $ref: '#/definitions/models.ErrorResponse'
+      success:
+        type: boolean
+    type: object
+  models.CartItem:
+    properties:
+      productId:
+        type: string
+      quantity:
+        type: integer
+    type: object
+  models.ErrorResponse:
+    properties:
+      code:
+        type: string
+      details:
+        type: string
+      message:
+        type: string
+    type: object
+  models.Order:
+    properties:
+      discountCode:
+        type: string
+      items:
+        items:
+          $ref: '#/definitions/models.CartItem'
+        type: array
+    type: object
+  models.OrderConfirmation:
+    properties:
+      discount:
+        type: number
+      orderId:
+        type: string
+      subtotal:
+        type: number
+      total:
+        type: number
+    type: object
+  models.Product:
+    properties:
+      category:
+        enum:
+        - Waffle
+        - Burger
+        - Pizza
+        - Pasta
+        type: string
+      id:
+        type: string
+      image:
+        $ref: '#/definitions/models.ProductImage'
+      name:
+        maxLength: 100
+        minLength: 2
+        type: string
+      price:
+        type: number
+    required:
+    - category
+    - id
+    - image
+    - name
+    - price
+    type: object
+  models.ProductImage:
+    properties:
+      desktop:
+        type: string
+      mobile:
+        type: string
+      tablet:
+        type: string
+      thumbnail:
+        type: string
+    required:
+    - desktop
+    - mobile
+    - tablet
+    - thumbnail
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: A shopping cart API with product and order management
+  title: Shopping Cart API
+  version: "1.0"
+paths:
+  /orders:
+    post:
+      consumes:
+      - application/json
+      description: Create a new order with the provided items
+      parameters:
+      - description: Order details
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/models.Order'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.OrderConfirmation'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      summary: Place a new order
+      tags:
+      - orders
+  /products:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of all available products
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Product'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      summary: Get all products
+      tags:
+      - products
+  /products/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a specific product by its ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Product'
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      summary: Get product by ID
+      tags:
+      - products
+swagger: "2.0"
