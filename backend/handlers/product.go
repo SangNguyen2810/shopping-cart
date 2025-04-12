@@ -7,12 +7,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ProductHandler handles product-related HTTP requests
 type ProductHandler struct {
 	service *services.ProductService
 }
 
-// NewProductHandler creates a new product handler
 func NewProductHandler(service *services.ProductService) *ProductHandler {
 	return &ProductHandler{service: service}
 }

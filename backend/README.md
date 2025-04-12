@@ -9,7 +9,6 @@ A Go-based backend server implementing the [Order Food Online API](https://order
 - CORS support for frontend integration
 - Discount code support:
   - `HAPPYHOURS`: 18% off total order
-  - `BUYGETONE`: Get the lowest priced item for free
 
 ## Setup
 

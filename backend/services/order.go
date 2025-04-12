@@ -9,13 +9,11 @@ import (
 	"time"
 )
 
-// OrderService handles order-related business logic
 type OrderService struct {
 	productService  *ProductService
 	discountService *DiscountService
 }
 
-// NewOrderService creates a new order service
 func NewOrderService(productService *ProductService, discountService *DiscountService) *OrderService {
 	return &OrderService{
 		productService:  productService,
@@ -30,22 +28,12 @@ func (s *OrderService) calculateDiscount(ctx context.Context, order models.Order
 
 	code := strings.ToUpper(order.DiscountCode)
 
-	// Handle HAPPYHOURS codes with Redis
 	if strings.HasPrefix(code, "HAPPYHOURS") {
 		discountPercentage, err := s.discountService.ValidateDiscountCode(ctx, code)
 		if err != nil {
 			return 0, err
 		}
 		return subtotal * discountPercentage, nil
-	}
-
-	// Legacy code for BUYGETONE
-	if code == "BUYGETONE" {
-		lowestPrice, err := s.findLowestPrice(order.Items)
-		if err != nil {
-			return 0, err
-		}
-		return lowestPrice, nil
 	}
 
 	return 0, nil
@@ -68,7 +56,6 @@ func (s *OrderService) findLowestPrice(items []models.CartItem) (float64, error)
 	return lowestPrice, nil
 }
 
-// PlaceOrder processes an order and returns the confirmation
 func (s *OrderService) PlaceOrder(order models.Order) (models.OrderConfirmation, error) {
 	ctx := context.Background()
 
@@ -82,7 +69,6 @@ func (s *OrderService) PlaceOrder(order models.Order) (models.OrderConfirmation,
 		return models.OrderConfirmation{}, err
 	}
 
-	// Generate random order ID
 	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
 	orderID := fmt.Sprintf("ORD%d", rng.Intn(100000))
 

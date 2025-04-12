@@ -8,22 +8,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// DiscountHandler handles discount code-related HTTP requests
 type DiscountHandler struct {
 	service *services.DiscountService
 }
 
-// NewDiscountHandler creates a new discount handler
 func NewDiscountHandler(service *services.DiscountService) *DiscountHandler {
 	return &DiscountHandler{service: service}
 }
 
-// ValidateDiscountRequest represents a discount code validation request
 type ValidateDiscountRequest struct {
 	Code string `json:"code" binding:"required"`
 }
 
-// ValidateDiscountResponse represents a discount code validation response
 type ValidateDiscountResponse struct {
 	Valid        bool    `json:"valid"`
 	DiscountRate float64 `json:"discountRate,omitempty"`
@@ -65,7 +61,6 @@ func (h *DiscountHandler) ValidateDiscountCode(c *gin.Context) {
 		return
 	}
 
-	// Validate the discount code
 	discountRate, err := h.service.ValidateDiscountCode(c.Request.Context(), request.Code)
 	if err != nil {
 		c.JSON(http.StatusOK, ValidateDiscountResponse{
@@ -75,7 +70,6 @@ func (h *DiscountHandler) ValidateDiscountCode(c *gin.Context) {
 		return
 	}
 
-	// Return success response
 	c.JSON(http.StatusOK, ValidateDiscountResponse{
 		Valid:        true,
 		DiscountRate: discountRate,

@@ -12,7 +12,6 @@ import (
 
 var validate = validator.New()
 
-// ErrorHandler middleware to handle errors consistently
 func ErrorHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Next()
@@ -40,12 +39,10 @@ func ErrorHandler() gin.HandlerFunc {
 	}
 }
 
-// Logger middleware for request logging
 func Logger() gin.HandlerFunc {
 	return gin.Logger()
 }
 
-// ValidateRequest middleware for request validation
 func ValidateRequest[T any]() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var request T
@@ -80,7 +77,6 @@ func ValidateRequest[T any]() gin.HandlerFunc {
 	}
 }
 
-// InjectService middleware to inject the product service into the context
 func InjectService(service *services.ProductService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Set("productService", service)

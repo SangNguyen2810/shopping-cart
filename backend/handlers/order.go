@@ -8,12 +8,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// OrderHandler handles order-related HTTP requests
 type OrderHandler struct {
 	service *services.OrderService
 }
 
-// NewOrderHandler creates a new order handler
 func NewOrderHandler(service *services.OrderService) *OrderHandler {
 	return &OrderHandler{service: service}
 }

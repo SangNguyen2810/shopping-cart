@@ -19,29 +19,23 @@ type APIResponse struct {
 	Error   *ErrorResponse `json:"error,omitempty"`
 }
 
-// Common error codes
 const (
-	// Client errors (4xx)
-	ErrCodeNotFound          = "NOT_FOUND"
-	ErrCodeInvalidRequest    = "INVALID_REQUEST"
-	ErrCodeValidationError   = "VALIDATION_ERROR"
-	ErrCodeUnauthorized      = "UNAUTHORIZED"
-	ErrCodeForbidden         = "FORBIDDEN"
-	ErrCodeRateLimitExceeded = "RATE_LIMIT_EXCEEDED"
-	ErrCodeInvalidInput      = "INVALID_INPUT"
-	ErrCodeDuplicateEntry    = "DUPLICATE_ENTRY"
-	ErrCodeInvalidToken      = "INVALID_TOKEN"
-	ErrCodeExpiredToken      = "EXPIRED_TOKEN"
+	ErrCodeNotFound        = "NOT_FOUND"
+	ErrCodeInvalidRequest  = "INVALID_REQUEST"
+	ErrCodeValidationError = "VALIDATION_ERROR"
+	ErrCodeUnauthorized    = "UNAUTHORIZED"
+	ErrCodeForbidden       = "FORBIDDEN"
+	ErrCodeInvalidInput    = "INVALID_INPUT"
+	ErrCodeDuplicateEntry  = "DUPLICATE_ENTRY"
+	ErrCodeInvalidToken    = "INVALID_TOKEN"
+	ErrCodeExpiredToken    = "EXPIRED_TOKEN"
 
-	// Server errors (5xx)
 	ErrCodeInternalError      = "INTERNAL_ERROR"
 	ErrCodeDatabaseError      = "DATABASE_ERROR"
 	ErrCodeServiceUnavailable = "SERVICE_UNAVAILABLE"
 	ErrCodeNetworkError       = "NETWORK_ERROR"
-
-	// Business logic errors
-	ErrCodeInsufficientStock = "INSUFFICIENT_STOCK"
-	ErrCodeInvalidDiscount   = "INVALID_DISCOUNT"
-	ErrCodeOrderNotFound     = "ORDER_NOT_FOUND"
-	ErrCodePaymentFailed     = "PAYMENT_FAILED"
+	ErrCodeInsufficientStock  = "INSUFFICIENT_STOCK"
+	ErrCodeInvalidDiscount    = "INVALID_DISCOUNT"
+	ErrCodeOrderNotFound      = "ORDER_NOT_FOUND"
+	ErrCodePaymentFailed      = "PAYMENT_FAILED"
 )
