@@ -4,8 +4,6 @@
 
 This full-stack e-commerce shopping cart application demonstrates modern web development practices with a React/TypeScript frontend and a Go backend. The application features product browsing, cart management, discount code application, and order processing with comprehensive error handling and state management.
 
-![Shopping Cart Demo](https://example.com/screenshot.png)
-
 ## Key Features
 
 - **Product Catalog**: Browse products with images, descriptions, and prices
