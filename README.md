@@ -259,6 +259,13 @@ Based on the [API Documentation](https://orderfoodonline.deno.dev/public/openapi
 - Discount code system with `HAPPYHOURS` (18% discount)
 - Responsive design for all device sizes
 - Custom backend API implementation in Go
+  
+## Things that I do not have enough time to cover:
+- Deploy your app anywhere securely. You may use AWS, Vercel, Deno Deploy, Surge, CloudFlare Pages or some other web app deployment services.
+- Additionally configure your repository to automatically publish your app on new commit push (CI).
+- Discount code BUYGETONE gives the lowest priced item for free
+I hope you guys will read through all the README and enjoy my code. Thank you guys.
+
 
 ## License
 
