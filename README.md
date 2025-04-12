@@ -10,7 +10,6 @@ This full-stack e-commerce shopping cart application demonstrates modern web dev
 - **Shopping Cart**: Add, remove, and update product quantities in real-time
 - **Discount System**: Apply voucher codes with server-side validation
   - Special `HAPPYHOURS` promotion with 18% discount (10 unique codes in Redis)
-  - `BUYGETONE` discount that gives the lowest priced item for free
   - Visual feedback for successful/failed code application
 - **Order Processing**: Secure checkout with order confirmation
 - **Responsive Design**: Optimized for mobile, tablet, and desktop
@@ -258,7 +257,7 @@ Based on the [API Documentation](https://orderfoodonline.deno.dev/public/openapi
 - Quantity management in cart
 - Order confirmation process
 - Interactive states for elements
-- Discount code system with `HAPPYHOURS` (18% discount) and `BUYGETONE` (free lowest-priced item)
+- Discount code system with `HAPPYHOURS` (18% discount)
 - Responsive design for all device sizes
 - Custom backend API implementation in Go
 
