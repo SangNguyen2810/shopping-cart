@@ -264,6 +264,7 @@ Based on the [API Documentation](https://orderfoodonline.deno.dev/public/openapi
 - Deploy your app anywhere securely. You may use AWS, Vercel, Deno Deploy, Surge, CloudFlare Pages or some other web app deployment services.
 - Additionally configure your repository to automatically publish your app on new commit push (CI).
 - Discount code BUYGETONE gives the lowest priced item for free
+- Pagination. This is an important part for a robust API, but for this project we dont have a real database to consider about which approach we should use for pagination.
 I hope you guys will read through all the README and enjoy my code. Thank you guys.
 
 
