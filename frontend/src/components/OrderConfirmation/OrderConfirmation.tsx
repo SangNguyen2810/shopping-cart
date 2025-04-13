@@ -62,16 +62,19 @@ const OrderConfirmation = () => {
             <Image src="/confirmed.png" alt="Order Confirmed" />
           </button>
 
-          <div className="mt-7">
+          <div className="mt-5">
             <header className="pb-2 text-[40px] font-semibold">Order Confirmed</header>
 
             <h2 className="pb-[30px] text-[#A49B99] text-base">We hope you enjoy your food!</h2>
 
-            <article className="bg-gray-50 rounded-lg">
+            <article className=" rounded-lg bg-[#FCF8F5]">
               {confirmation.items && confirmation.items.length > 0 ? (
                 <>
                   {confirmation.items.map((item: OrderResponseItem, index: number) => (
-                    <section key={index} className="grid grid-cols-4 gap-x-4 pt-7 pb-4 mx-7 border-b border-gray-200">
+                    <section
+                      key={index}
+                      className="grid grid-cols-4 gap-x-4 pt-7 pb-4 mx-7 border-b border-gray-200"
+                    >
                       <Image
                         src={item.product.image?.thumbnail}
                         alt={item.product.name}
@@ -80,14 +83,10 @@ const OrderConfirmation = () => {
                       <div className="col-span-2 grid">
                         <h2 className="">{item.product.name}</h2>
                         <span className="text-sm flex items-center gap-x-4">
-                          <p style={{ color: 'var(--color-text-highlight-dimmed)' }}>
-                            {item.quantity}x
-                          </p>
+                          <p className="!text-text-highlightDimmed">{item.quantity}x</p>
                           <div className="flex items-center gap-x-1">
-                            <p style={{ color: 'var(--color-text-highlight-dimmed)' }}>@</p>
-                            <p style={{ color: 'var(--color-text-secondary)' }}>
-                              ${item.product.price.toFixed(2)}
-                            </p>
+                            <p className="!text-text-highlightDimmed">@</p>
+                            <p className="!text-text-secondary">${item.product.price.toFixed(2)}</p>
                           </div>
                         </span>
                       </div>
@@ -121,7 +120,7 @@ const OrderConfirmation = () => {
               radius="xl"
               size="xs"
               onClick={handleClose}
-              className="transition-all  !text-[#EFBAA2] duration-200 ease-in-out hover:-translate-y-0.5 hover:shadow-md bg-[#C73B0E] hover:bg-[#B94825] h-[48px] mt-5"
+              className="transition-all !text-text-button duration-200 ease-in-out hover:-translate-y-0.5 hover:shadow-md bg-[#C73B0E] hover:bg-[#B94825] !h-[53px] mt-5"
             >
               Start New Order
             </Button>

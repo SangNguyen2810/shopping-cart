@@ -14,13 +14,13 @@ const CartItem = ({ product, quantity, onRemove }: CartItemProps) => {
   return (
     <li className="flex justify-between">
       <section className="space-y-1">
-        <h2 className="text-[15px] font-medium leading-tight">
+        <h2 className="text-[15px] font-medium leading-tight text-text-highlightDimmedDark">
           {product.name}
         </h2>
-        <div className="flex items-center gap-[6px] text-[15px] text-[#6B6B6B]">
-          <span>{quantity}x</span>
-          <span>@${product.price.toFixed(2)}</span>
-          <span className="text-black font-medium">
+        <div className="flex items-center gap-[6px] text-[15px] ">
+          <span className="text-text-highlightDimmed pr-4">{quantity}x</span>
+          <span className="text-text-secondary">@${product.price.toFixed(2)}</span>
+          <span className="text-text-secondary">
             ${itemTotal.toFixed(2)}
           </span>
         </div>

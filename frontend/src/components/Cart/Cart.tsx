@@ -182,7 +182,7 @@ const Cart = ({ products }: CartProps) => {
       <article className={styles.cartTotal}>
         <section className="mb-[41px] grid grid-cols-1">
           <header className="mt-[26px] mx-[23px]">
-            <h3 className="text-2xl " style={{ color: 'var(--color-text-highlight)' }}>
+            <h3 className="text-2xl text-text-highlight">
               Your Cart (0)
             </h3>
           </header>
@@ -200,8 +200,7 @@ const Cart = ({ products }: CartProps) => {
       <LoadingOverlay visible={isLoading} />
       <section className="px-6 pt-6">
         <h3
-          className="text-[22px] font-medium mb-6"
-          style={{ color: 'var(--color-text-highlight)' }}
+          className="text-[22px] font-medium mb-6 text-text-highlight"
         >
           Your Cart ({totalItems})
         </h3>
@@ -211,10 +210,9 @@ const Cart = ({ products }: CartProps) => {
 
       <section className="px-6 pb-6">
         <header
-          className="flex justify-between items-center py-4 border-t mt-6"
-          style={{ borderColor: 'var(--color-border-light)' }}
+          className="flex justify-between items-center py-4 border-t mt-6 border-border-light"
         >
-          <p className="text-[15px] font-medium">Order Total</p>
+          <p className="text-[15px] font-medium text-text-gray">Order Total</p>
           <p className="text-[22px] font-bold">${total.toFixed(2)}</p>
         </header>
 
@@ -226,11 +224,8 @@ const Cart = ({ products }: CartProps) => {
               value={voucherCode}
               onChange={handleVoucherCodeChange}
               className={`flex-1 px-4 py-2 text-sm border rounded-lg focus:outline-none focus:ring-1 ${
-                voucherError ? 'border-red-500 focus:ring-red-500' : 'focus:ring-[#C63B0F]'
+                voucherError ? 'border-red-500 focus:ring-red-500' : 'focus:ring-button-primary'
               }`}
-              style={{ 
-                borderColor: voucherError ? '#ef4444' : 'var(--color-border-light)' 
-              }}
               disabled={isApplyingVoucher || voucherApplied}
             />
             <Button
@@ -240,8 +235,8 @@ const Cart = ({ products }: CartProps) => {
               onClick={handleVoucherButton}
               className={`h-[38px] ${
                 voucherApplied 
-                  ? 'text-white bg-[#4CAF50] hover:bg-[#3d8b40]' 
-                  : 'text-[#C63B0F] border-[#C63B0F] hover:bg-[#FFF5F1]'
+                  ? 'text-white bg-button-success hover:bg-button-successHover' 
+                  : 'text-button-primary border-button-primary hover:bg-button-hover'
               }`}
               loading={isApplyingVoucher}
             >
@@ -255,15 +250,14 @@ const Cart = ({ products }: CartProps) => {
 
         {voucherApplied && (
           <section className="flex justify-between items-center mb-4 px-1">
-            <p className="text-[13px] text-[#4CAF50] font-medium">Discount Applied</p>
-            <p className="text-[15px] text-[#4CAF50] font-medium">-${discount.toFixed(2)} ({discountRate * 100}%)</p>
+            <p className="text-[13px] text-button-success font-medium">Discount Applied</p>
+            <p className="text-[15px] text-button-success font-medium">-${discount.toFixed(2)} ({discountRate * 100}%)</p>
           </section>
         )}
 
         {voucherApplied && (
           <header
-            className="flex justify-between items-center py-2 mb-4"
-            style={{ borderColor: 'var(--color-border-light)' }}
+            className="flex justify-between items-center py-2 mb-4 border-t border-border-light"
           >
             <p className="text-[15px] font-medium">Final Total</p>
             <p className="text-[22px] font-bold">${finalTotal.toFixed(2)}</p>
@@ -271,13 +265,12 @@ const Cart = ({ products }: CartProps) => {
         )}
 
         <section
-          className="py-[14px] px-4 rounded-lg flex w-full justify-center gap-2 mb-4"
-          style={{ backgroundColor: 'var(--color-bg-accent)' }}
+          className="py-[14px] px-4 rounded-lg flex w-full justify-center gap-2 mb-4 bg-bg-accent"
         >
           <img src="/carbon-neutral.png" alt="Eco friendly" />
-          <div className="flex text-[13px]" style={{ color: '#968D8B' }}>
+          <div className="flex text-[13px] !text-text-gray">
             <p>This is a &nbsp;</p>
-            <p className="font-bold" style={{ color: '#837975' }}>
+            <p className="font-bold !text-text-grayDark">
               carbon-neutral &nbsp;
             </p>
             <p> delivery</p>
@@ -290,7 +283,7 @@ const Cart = ({ products }: CartProps) => {
           radius="xl"
           size="xs"
           onClick={confirmOrder}
-          className="transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:shadow-md h-[48px] !text-[#EFBAA2]"
+          className="transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:shadow-md !h-[53px] !text-text-button"
         >
           Confirm Order
         </Button>

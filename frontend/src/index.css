@@ -11,10 +11,13 @@
 
   /* Text colors */
   --color-text-primary: #333333;
-  --color-text-secondary: #bbb2ae;
+  --color-text-secondary: #B2A8A6;
   --color-text-muted: #999999;
   --color-text-highlight: #c56b4f;
-  --color-text-highlight-dimmed: #bf7f6b;
+  --color-text-highlight-dimmed: #C08778;
+  --color-text-highlight-dimmed-dark: #716A67;
+  --color-text-gray: #928D8B;
+  --color-button: #E7AB91;
 
   /* Background colors */
   --color-bg-light: #b4a69c;
