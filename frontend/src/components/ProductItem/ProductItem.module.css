@@ -1,42 +1,21 @@
 .button {
-  background-color: #FDFCFC !important;
-  border: 1px solid #77706D !important;
-  border-radius: 29px !important;
-  padding: 13px 27px !important;
-  height: auto !important;
-  box-shadow: none !important;
-  display: flex !important;
+  @apply !bg-[#FDFCFC] border !border-[#77706D] rounded-[29px] px-[27px] py-[13px] h-auto shadow-none flex;
 }
 
 .button:hover {
-  background-color: #EBEBEB !important;
+  @apply !bg-[#EBEBEB];
 }
 
 .counter {
-  background-color: var(--color-primary-dark) !important;
-  border: 1px solid var(--color-primary-darker) !important;
-  border-radius: 29px !important;
-  padding: 8px 12px !important;
-  display: grid !important;
-  grid-template-columns: repeat(3, auto) !important;
-  justify-items: center !important;
-  justify-self: center !important;
-  gap: 24px !important;
-  align-items: center !important;
+  @apply bg-[#C63B0F] rounded-full px-3 py-2 grid grid-cols-3 justify-items-center justify-self-center gap-6 items-center;
 }
 
 .counterButton {
-  background-color: transparent !important;
-  border: 1px solid white !important;
-  width: 32px !important;
-  height: 32px !important;
-  padding: 0 !important;
+  @apply !bg-transparent border !border-white !w-[32px] !h-[32px] !p-0 !text-lg !font-medium !text-white;
+  @apply flex items-center justify-center;
   border-radius: 50% !important;
-  font-size: 18px !important;
-  font-weight: 500 !important;
-  color: white !important;
 }
 
 .counterButton:hover {
-  background-color: rgba(255, 255, 255, 0.1) !important;
+  @apply !bg-white/10;
 }
