@@ -29,31 +29,14 @@ func (s *OrderService) calculateDiscount(ctx context.Context, order models.Order
 	code := strings.ToUpper(order.DiscountCode)
 
 	if strings.HasPrefix(code, "HAPPYHOURS") {
-		discountPercentage, err := s.discountService.ValidateDiscountCode(ctx, code)
+		discountResponse, err := s.discountService.ValidateDiscountCode(ctx, code)
 		if err != nil {
 			return 0, err
 		}
-		return subtotal * discountPercentage, nil
+		return subtotal * discountResponse.DiscountRate, nil
 	}
 
 	return 0, nil
-}
-
-func (s *OrderService) findLowestPrice(items []models.CartItem) (float64, error) {
-	var lowestPrice float64 = -1
-	for _, item := range items {
-		product, err := s.productService.GetProductByID(item.ProductID)
-		if err != nil {
-			return 0, err
-		}
-		if product == nil {
-			return 0, fmt.Errorf("product not found: %s", item.ProductID)
-		}
-		if lowestPrice == -1 || product.Price < lowestPrice {
-			lowestPrice = product.Price
-		}
-	}
-	return lowestPrice, nil
 }
 
 func (s *OrderService) PlaceOrder(order models.Order) (models.OrderConfirmation, error) {

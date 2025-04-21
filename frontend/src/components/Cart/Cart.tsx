@@ -80,7 +80,8 @@ const Cart = ({ products }: CartProps) => {
     try {
       const response = await validateDiscountCode(voucherCode);
       
-      if (response.valid && response.discountRate) {
+      if (response.valid && response.discountRate && response.code) {
+        setVoucherCode(response.code);
         setDiscountRate(response.discountRate);
         setDiscount(total * response.discountRate);
         setVoucherApplied(true);

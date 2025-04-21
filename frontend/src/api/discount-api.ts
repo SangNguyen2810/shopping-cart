@@ -3,14 +3,13 @@ import { fetchApi } from '@api/config';
 import { ENDPOINTS, NOTIFICATIONS } from '@constants/index';
 import { notifications } from '@mantine/notifications';
 
-// Schema for discount validation request
 export const discountValidationRequestSchema = z.object({
   code: z.string(),
 });
 
-// Schema for discount validation response
 export const discountValidationResponseSchema = z.object({
   valid: z.boolean(),
+  code: z.string().optional(),
   discountRate: z.number().optional(),
   error: z.string().optional(),
 });

@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"shopping-cart/backend/models"
 	"strings"
 	"time"
 
@@ -20,6 +21,18 @@ const (
 	lockTimeout                  = 5 * time.Second
 )
 
+type DiscountCodeResponse struct {
+	Code         string  `json:"code"`
+	DiscountRate float64 `json:"discountRate"`
+}
+
+type ValidateDiscountResponse struct {
+	Valid        bool    `json:"valid"`
+	Code         string  `json:"code,omitempty"`
+	DiscountRate float64 `json:"discountRate,omitempty"`
+	Error        string  `json:"error,omitempty"`
+}
+
 type DiscountService struct {
 	redisClient *redis.Client
 }
@@ -31,7 +44,7 @@ func NewDiscountService(redisClient *redis.Client) *DiscountService {
 }
 
 func (s *DiscountService) InitializeDiscountCodes(ctx context.Context) error {
-	exists, err := s.redisClient.Exists(ctx, fmt.Sprintf("%s%s%d", discountCodePrefix, discountKey, 0)).Result()
+	exists, err := s.redisClient.Exists(ctx, fmt.Sprintf("%s%s_%d", discountCodePrefix, discountKey, 0)).Result()
 	if err != nil {
 		return err
 	}
@@ -41,7 +54,7 @@ func (s *DiscountService) InitializeDiscountCodes(ctx context.Context) error {
 	}
 
 	for i := 0; i < happyHoursCodesCount; i++ {
-		key := fmt.Sprintf("%s%s%d", discountCodePrefix, discountKey, i)
+		key := fmt.Sprintf("%s%s_%d", discountCodePrefix, discountKey, i)
 		err := s.redisClient.Set(ctx, key, "available", 0).Err()
 		if err != nil {
 			return err
@@ -51,68 +64,63 @@ func (s *DiscountService) InitializeDiscountCodes(ctx context.Context) error {
 	return nil
 }
 
-func (s *DiscountService) ValidateDiscountCode(ctx context.Context, code string) (float64, error) {
+func (s *DiscountService) ValidateDiscountCode(ctx context.Context, code string) (*DiscountCodeResponse, error) {
 	code = strings.ToUpper(code)
 
-	if !strings.HasPrefix(code, "HAPPYHOURS") {
-		return 0, errors.New("invalid discount code")
+	if !strings.HasPrefix(code, discountKey) {
+		return nil, errors.New(models.ErrDiscountCode)
 	}
 
-	if len(code) == 10 {
-		foundAvailable := false
-		for i := 0; i < happyHoursCodesCount; i++ {
-			key := fmt.Sprintf("%s%s%d", discountCodePrefix, discountKey, i)
-			lockKey := fmt.Sprintf("%s%s%d", lockPrefix, discountKey, i)
+	foundAvailable := false
+	var specificCode string
 
-			locked, err := s.redisClient.SetNX(ctx, lockKey, "1", lockTimeout).Result()
-			if err != nil {
-				return 0, fmt.Errorf("failed to acquire lock: %v", err)
-			}
-			if !locked {
-				continue
-			}
-			defer s.redisClient.Del(ctx, lockKey)
+	for i := 0; i < happyHoursCodesCount; i++ {
+		key := fmt.Sprintf("%s%s_%d", discountCodePrefix, discountKey, i)
+		lockKey := fmt.Sprintf("%s%s_%d", lockPrefix, discountKey, i)
 
-			txf := func(tx *redis.Tx) error {
-				val, err := tx.Get(ctx, key).Result()
-				if err == redis.Nil {
-					return nil
-				}
-				if err != nil {
-					return err
-				}
-				if val == "available" {
-					code = fmt.Sprintf("HAPPYHOURS%d", i)
-					foundAvailable = true
-					_, err = tx.TxPipelined(ctx, func(pipe redis.Pipeliner) error {
-						pipe.Set(ctx, key, "used", 24*time.Hour)
-						usedKey := fmt.Sprintf("%s%s", usedCodePrefix, code)
-						pipe.Set(ctx, usedKey, time.Now().String(), 24*time.Hour)
-						return nil
-					})
-					return err
-				}
+		locked, err := s.redisClient.SetNX(ctx, lockKey, "1", lockTimeout).Result()
+		if err != nil {
+			return nil, fmt.Errorf("failed to acquire lock: %v", err)
+		}
+		if !locked {
+			continue
+		}
+		defer s.redisClient.Del(ctx, lockKey)
+
+		txf := func(tx *redis.Tx) error {
+			val, err := tx.Get(ctx, key).Result()
+			if err == redis.Nil {
 				return nil
 			}
-
-			err = s.redisClient.Watch(ctx, txf, key)
-			if err == nil && foundAvailable {
-				break
+			if err != nil {
+				return err
 			}
+			if val == "available" {
+				specificCode = fmt.Sprintf("%s_%d", discountKey, i)
+				foundAvailable = true
+				_, err = tx.TxPipelined(ctx, func(pipe redis.Pipeliner) error {
+					pipe.Set(ctx, key, "used", 24*time.Hour)
+					usedKey := fmt.Sprintf("%s%s", usedCodePrefix, specificCode)
+					pipe.Set(ctx, usedKey, time.Now().String(), 24*time.Hour)
+					return nil
+				})
+				return err
+			}
+			return nil
 		}
-		if !foundAvailable {
-			return 0, errors.New("all discount codes have been used")
+
+		err = s.redisClient.Watch(ctx, txf, key)
+		if err == nil && foundAvailable {
+			break
 		}
-	} else {
-		return 0, errors.New("invalid HAPPYHOURS code format")
 	}
 
-	return happyHoursDiscountPercentage, nil
-}
-
-func (s *DiscountService) GetDiscountPercentage(code string) float64 {
-	if strings.HasPrefix(strings.ToUpper(code), discountKey) {
-		return happyHoursDiscountPercentage
+	if !foundAvailable {
+		return nil, errors.New("all discount codes have been used")
 	}
-	return 0
+
+	return &DiscountCodeResponse{
+		Code:         specificCode,
+		DiscountRate: happyHoursDiscountPercentage,
+	}, nil
 }

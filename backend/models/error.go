@@ -1,18 +1,15 @@
 package models
 
-// ErrorResponse represents a detailed error response
 type ErrorResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 	Details string `json:"details,omitempty"`
 }
 
-// Error implements the error interface
 func (e *ErrorResponse) Error() string {
 	return e.Message
 }
 
-// APIResponse represents a standard API response
 type APIResponse struct {
 	Success bool           `json:"success"`
 	Data    interface{}    `json:"data,omitempty"`
@@ -38,4 +35,5 @@ const (
 	ErrCodeInvalidDiscount    = "INVALID_DISCOUNT"
 	ErrCodeOrderNotFound      = "ORDER_NOT_FOUND"
 	ErrCodePaymentFailed      = "PAYMENT_FAILED"
+	ErrDiscountCode           = "INVALID_DISCOUNT_CODE"
 )

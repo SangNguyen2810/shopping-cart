@@ -22,8 +22,14 @@ type ValidateDiscountRequest struct {
 
 type ValidateDiscountResponse struct {
 	Valid        bool    `json:"valid"`
+	Code         string  `json:"code,omitempty"`
 	DiscountRate float64 `json:"discountRate,omitempty"`
 	Error        string  `json:"error,omitempty"`
+}
+
+type DiscountCodeResponse struct {
+	Code         string  `json:"code"`
+	DiscountRate float64 `json:"discountRate"`
 }
 
 // @Summary      Validate a discount code
@@ -61,7 +67,7 @@ func (h *DiscountHandler) ValidateDiscountCode(c *gin.Context) {
 		return
 	}
 
-	discountRate, err := h.service.ValidateDiscountCode(c.Request.Context(), request.Code)
+	discountResponse, err := h.service.ValidateDiscountCode(c.Request.Context(), request.Code)
 	if err != nil {
 		c.JSON(http.StatusOK, ValidateDiscountResponse{
 			Valid: false,
@@ -72,6 +78,7 @@ func (h *DiscountHandler) ValidateDiscountCode(c *gin.Context) {
 
 	c.JSON(http.StatusOK, ValidateDiscountResponse{
 		Valid:        true,
-		DiscountRate: discountRate,
+		Code:         discountResponse.Code,
+		DiscountRate: discountResponse.DiscountRate,
 	})
 }
